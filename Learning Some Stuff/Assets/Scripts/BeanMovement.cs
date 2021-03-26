@@ -11,18 +11,16 @@ public class BeanMovement : MonoBehaviour
         c = gameObject.GetComponent<CapsuleCollider>();
         rb = gameObject.GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
-    void Jump()
-    {
-            rb.velocity = Vector3.up * 10;
-    }
     void Update()
     {
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
+    }
+    void Jump()
+    {
+        rb.velocity = Vector3.up * 10;
     }
     private bool IsGrounded()
     {
