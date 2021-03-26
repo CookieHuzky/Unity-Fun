@@ -9,9 +9,20 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void TestScene()
+    {
+        SceneManager.LoadScene("Testing");
+    }
 
     public void Quit()
     {
         Application.Quit();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            TestScene();
+        }
     }
 }
