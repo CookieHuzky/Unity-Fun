@@ -35,7 +35,7 @@ public class BeanMovement : MonoBehaviour
         {
             rayColor = Color.red;
         }
-        Debug.DrawRay(c.bounds.center, Vector3.down * (c.bounds.extents.y + extraHeight));
+        Debug.DrawRay(c.bounds.center, Vector3.down * (c.bounds.extents.y + extraHeight), rayColor);
         return rayHit != false;
     }
 }
