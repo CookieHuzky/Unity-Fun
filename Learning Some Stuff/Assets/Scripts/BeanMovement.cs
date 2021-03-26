@@ -6,6 +6,9 @@ public class BeanMovement : MonoBehaviour
 {
     private CapsuleCollider c;
     private Rigidbody rb;
+    public float jumpBoost;
+    public float speed;
+    //public float extraHeight;
     void Start()
     {
         c = gameObject.GetComponent<CapsuleCollider>();
@@ -17,15 +20,16 @@ public class BeanMovement : MonoBehaviour
         {
             Jump();
         }
+        rb.velocity = new Vector3(1, 0, 0);
+        Debug.Log(rb.velocity);
     }
     void Jump()
     {
-        rb.velocity = Vector3.up * 10;
+        rb.velocity = Vector3.up * jumpBoost;
     }
     private bool IsGrounded()
     {
-        float extraHeight = .01f;
-        bool rayHit = Physics.Raycast(c.bounds.center, Vector3.down, c.bounds.extents.y + extraHeight);
+        /*bool rayHit = Physics.CapsuleCast(c.bounds.center, , c.radius, Vector3.down);
         Color rayColor;
         if (rayHit)
         {
@@ -37,5 +41,7 @@ public class BeanMovement : MonoBehaviour
         }
         Debug.DrawRay(c.bounds.center, Vector3.down * (c.bounds.extents.y + extraHeight), rayColor);
         return rayHit != false;
+        */
+        return true;
     }
 }
