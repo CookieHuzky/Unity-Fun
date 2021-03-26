@@ -6,9 +6,11 @@ public class BeanMovement : MonoBehaviour
 {
     private CapsuleCollider c;
     private Rigidbody rb;
-    public float jumpBoost;
+    private readonly float jumpBoost = 5;
     public float speed;
-    //public float extraHeight;
+    private bool isSlow = false;
+    private bool isGrounded;
+    private bool isJump;
     void Start()
     {
         c = gameObject.GetComponent<CapsuleCollider>();
@@ -16,32 +18,35 @@ public class BeanMovement : MonoBehaviour
     }
     void Update()
     {
-        if (IsGrounded() && Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            Jump();
+            if (isSlow)
+            {
+                Time.timeScale = 1;
+                isSlow = false;
+            }
+            else
+            {
+                Time.timeScale = 0.3f;
+                isSlow = true;
+            }
         }
-        rb.velocity = new Vector3(1, 0, 0);
-        Debug.Log(rb.velocity);
+        isGrounded = GroundCheck();
+        isJump = Input.GetButton("Jump");
     }
-    void Jump()
+    void FixedUpdate()
     {
-        rb.velocity = Vector3.up * jumpBoost;
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        rb.MovePosition(transform.position + move * Time.deltaTime * speed);
+
+        if (isGrounded && isJump)
+        {
+            rb.velocity = Vector3.up * jumpBoost;
+        }
     }
-    private bool IsGrounded()
+    private bool GroundCheck()
     {
-        /*bool rayHit = Physics.CapsuleCast(c.bounds.center, , c.radius, Vector3.down);
-        Color rayColor;
-        if (rayHit)
-        {
-            rayColor = Color.green;
-        }
-        else
-        {
-            rayColor = Color.red;
-        }
-        Debug.DrawRay(c.bounds.center, Vector3.down * (c.bounds.extents.y + extraHeight), rayColor);
-        return rayHit != false;
-        */
-        return true;
+        bool rayHit = (Physics.SphereCast(new Ray(c.bounds.center, Vector3.down), c.radius, c.bounds.extents.y - .4f));
+        return (rayHit);
     }
 }
