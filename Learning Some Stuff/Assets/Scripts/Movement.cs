@@ -30,7 +30,6 @@ public class Movement : MonoBehaviour
         pos.z = pos.z + speed * ver * Time.deltaTime;
         pos.y = pos.y + speed * jump * Time.deltaTime;
 
-
         rb.MovePosition(pos);
     }
 }
